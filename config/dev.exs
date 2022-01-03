@@ -2,10 +2,10 @@ import Config
 
 # Configure your database
 config :rumbl, Rumbl.Repo,
-  username: "muco",
-  password: "Mucort@123",
-  hostname: "localhost",
-  database: "rumbl",
+  username: System.get_env("DATABASE_USERNAME"),
+  password: System.get_env("DATABASE_PASSWORD"),
+  hostname: System.get_env("DATABASE_HOST"),
+  database: System.get_env("DATABASE_NAME"),
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
