@@ -25,6 +25,12 @@ defmodule RumblWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/manage", RumblWeb do
+    pipe_through [:browser, :auth_guard]
+
+    resources "/videos", VideoController
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", RumblWeb do
   #   pipe_through :api
