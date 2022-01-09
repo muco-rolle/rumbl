@@ -8,7 +8,7 @@ defmodule Rumbl.Repo.Migrations.CreateUsers do
       add :id, :uuid, primary_key: true, null: false, default: fragment("gen_random_uuid()")
       add :name, :string
       add :username, :string, null: false
-      add :password, :string
+      add :password_hash, :string
 
       timestamps()
     end
