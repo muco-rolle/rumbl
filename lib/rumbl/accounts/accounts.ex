@@ -4,6 +4,7 @@ defmodule Rumbl.Accounts do
   """
 
   alias Rumbl.{Repo, Accounts.User}
+  import Argon2
 
   def list_users(), do: Repo.all(User)
 
@@ -21,5 +22,21 @@ defmodule Rumbl.Accounts do
     %User{}
     |> User.signup_changeset(params)
     |> Repo.insert()
+  end
+
+  def login(username, password) do
+    user = get_user_by(username: username)
+
+    cond do
+      user && verify_pass(password, user.password_hash) ->
+        {:ok, user}
+
+      user ->
+        {:error, :unauthorized}
+
+      true ->
+        no_user_verify()
+        {:error, :not_found}
+    end
   end
 end
