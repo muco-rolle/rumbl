@@ -6,7 +6,7 @@ defmodule Rumbl.Multimedia do
   import Ecto.Query, warn: false
   alias Rumbl.Repo
 
-  alias Rumbl.Multimedia.Video
+  alias Rumbl.Multimedia.{Video, Category}
   alias Rumbl.Accounts.User
   import Ecto.Changeset
 
@@ -119,5 +119,15 @@ defmodule Rumbl.Multimedia do
 
   defp get_user_videos(query, %User{id: user_id}) do
     from video in query, where: video.user_id == ^user_id
+  end
+
+  def list_alphabetical_categories do
+    Category
+    |> Category.alphabetical()
+    |> Repo.all()
+  end
+
+  def create_category!(name) do
+    Repo.insert!(%Category{name: name}, on_conflict: :nothing)
   end
 end
